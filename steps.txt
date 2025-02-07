@@ -1,0 +1,47 @@
+Setup for Devops
+
+1. Make sure you have a cloud service like: GCP, AWS, Azure or Digital Ocean
+2. Make sure your project/app is working fine in local
+3. Purchase a domain annd cloud service
+4. Domains - Domains can be purchased from (1. Namecheap 2. BigRock 3. Hostinger 4. GoDaddy)
+5. Cloud service instance 
+- AWS
+- GCP
+- Azure
+- Digital Ocean
+
+6. Local app setup 
+
+1. HTML and backend setup -
+
+- Make sure you have build folder and index.html in it 
+- In the same folder, you should have simple express server with these lines
+
+```
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+[declaring app and port variables]
+app.use(express.static(path.join(__dirname, "build")));
+[simple hello saad api]
+[simple hello world api]
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+[app.listen]
+```
+
+2. React Vite + Backend setup 
+- In server do the same steps as local html (make build and all that bs)
+- In client with vite, do hello world test
+- Make sure hello world in react is working (npm run dev)
+- cd client
+- npm run build 
+-> This creates a dist folder which is an optimized folder for your react app 
+(delete the build from server)
+- mv dist ../server
+- cd server
+- open app.js and and change all build folder to dist
+- npm start
