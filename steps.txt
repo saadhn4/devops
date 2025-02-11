@@ -45,3 +45,223 @@ app.get("/*", (req, res) => {
 - cd server
 - open app.js and and change all build folder to dist
 - npm start
+
+Top sites for domains:
+
+1. namecheap 
+2. hostinger
+3. GoDaddy
+4. BigRock
+
+preferable - .com, .in, .app, .xyz
+
+------------------------------------------------------------------------------------------------------------------------
+
+Steps for deployment Web app/ Website
+
+1. Make sure your webapp or website is working on localhost
+2. Make a GitHub repo and push the code to GitHub without node_modules
+3. Changes in GitHub repo (Add description, Add URL, Add keywords, Add README.md)
+4. Purchase a domain from one of the 4 sites 
+5. Purchase a cloud service from a cloud platform 
+6. Create an account and make payment setup in your cloud platform 
+7. Open digital ocean 
+- Login 
+- Things which are important to us: Droplets, Networking and Billing 
+- Select Droplets 
+- Create Droplet (Linux based virtual machine on cloud infrastructure)
+- Select Region as Bangalore 
+- Choose img as Ubuntu and select its latest version
+- Choose size 
+- Share CPU (Basic) => Premium Intel -> $16 per month 
+- Select choose authentication method as password ; set password 
+- Select check mark: Add improved metrics monitoring and alerting (free)
+- Select 1 Droplet and hostname saad in lowercase
+- Click create droplet
+-Generated IP address: 139.59.93.71 (remember this!)
+- Click on droplets (left sidebar)
+- Select Access console 
+- Launch drop console 
+- Opens a tab based terminal, enter these commands:
+1. sudo apt update && sudo apt upgrade 
+2. sudo adduser saad (set password same as your name)
+3. sudo chown saad:saad /home/saad 
+4. nano /etc/sudoers
+5. Then add the user below admin user like below syntax 
+(below root line write same just replace root with saad)
+saad ALL =(ALL:ALL) ALL 
+6. usermod -a -G sudo saad 
+7. su saad 
+8. cd
+
+8. SSH key setup
+cd
+ssh-keygen -t ed25519 -C "saadcfi4@gmail.com"
+Enter 4 times 
+cd .ssh
+cat id_ed25519.pub 
+copy the whole content of public and paste in 
+GitHub => Settings => SSH & GPG Keys => Add SSH keys 
+Paste the key in Key section and save it 
+cd 
+git config --global user.name "saadhn4"
+git config --global user.email "saadcfi4@gmail.com"
+
+To verify: git config --list
+
+Clone any repo from your profile
+
+cd
+git clone ssh-url 
+Enter: yes 
+
+9. Connect cloud to terminal preview 
+
+- Open WSL 
+- cd .ssh
+- copy the content of public key
+
+//Windows
+
+-C:\Users\ASUS TUF\.ssh  
+- If no .ssh 
+- open cmd 
+- ssh-keygen -t ed25519 -C "saadcfi4@gmail.com"
+- Enter 4 times 
+- cd .ssh 
+- type id_ed25519.pub
+- Copy public key and paste in authorized_keys of cloud
+
+
+//Cloud 
+
+-cd 
+- cd .ssh 
+- cat id_ed25519.pub
+- touch authorized_keys
+- nano authorized_keys
+- paste the public key of the wsl and ctrl o enter ctrl x 
+
+
+//Open terminal preview 
+-Click on top dropdown 
+- Settings => Scroll down => Add a new profile 
+- Select ubuntu and click duplicate 
+- Give name as cloud server
+- ssh saad@139.59.93.71 
+
+- Change the setting and click on save 
+- Open the terminal dropdown and select Cloud server 
+- Enter yes
+- Now open cloud server from terminal
+
+10. From suhail bhais gist make an ok.sh nano ok.sh copy paste all the 16 commands then bash ok.sh 
+sudo apt install -y git
+sudo apt install -y net-tools
+sudo timedatectl set-timezone Asia/Kolkata
+sudo apt-get install -y nginx
+sudo apt install -y snapd
+sudo snap install core
+sudo apt-get install -y python3-certbot-nginx
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/
+sudo apt install -y python3-pip
+sudo apt-get autoremove -y
+sudo apt full-upgrade -y
+sudo apt install -y gcc
+sudo apt install -y unzip
+sudo apt install -y build-essential
+sudo apt-get install -y manpages-dev
+
+11. Node Js install for cloud (for linux using nvm)
+
+12. Project clone & Nginx setup
+
+- Make sure your project is pushed in github 
+- Open cloud and type 
+- cd 
+- git clone ssh-url 
+- install npm i for server 
+for nodemon npm i -g nodemon pm2 
+
+13. Domain add using script 
+
+DNS (Domain Name System) records are used to map domain names to IP address and other resources. Here are the most common types of DNS records 
+
+Essential DNS records
+
+1. A record (Address record)
+- Maps a domain to an ipv4 address 
+- Example: example.com -> 192.169.1.1 
+
+2. AAAA Record(ipv6 address record)
+
+- Maps a domain to an ipv6 address 
+- Example: example.com -> 2001:db8::ff00:42:8329 
+
+3. CNAME Record (Canonical Name Record)
+
+- Aliases one domain name to another 
+- Example: www.example.com -> example.com 
+
+4. MX Record(Mail Exchange Record)
+
+- Specifies mail servers for receiving emails 
+- Example: example.com -> mail.example.com (Priority: 10)
+
+5. TXT Record (Text Record)
+
+- Holds arbitary text, often use for authentication (eg. SPF, DKIM, DMARC)
+
+-Example:
+
+example.com 
+
+6. NS Record(Name Server Record)
+- Specifies the authoratitive DNS servers for a domain 
+- Example: example.com -> ns1.example.com, ns2.example.com
+
+-Open digital ocean 
+-Open Networking
+- Click on domains tab
+-Add domains 
+- Add your domain 
+- Get your NS records
+----
+Add 2 A Records of ur domain 
+www and @ => cloud ip 
+----
+- Take your cloud NS and add it in domain dns settings 
+- Check your NS records get updated in dnschecker.org
+
+14. Nginx setup 
+- cd /etc/nginx/sites-enabled/
+- sudo rm -rf *
+- cd /etc/nginx/sites-available
+- sudo touch domains 
+- sudo ln -s /etc/nginx/sites-available/domains/ /etc/nginx/sites-enabled
+Visit nginx.suhail.app 
+add your domain with www (example- suhail.com www.suhail.com)
+and add your port and click on get config 
+copy the config
+sudo nano /etc/nginx/sites-available/domains
+you can remove default keep domains 
+paste it there and check it by
+- sudo nginx -t
+- sudo systemctl restart nginx
+
+15. Project Server starting 
+- cd repoName 
+- cd server 
+- make sure u have nodemon and pm2 
+- first check from npm start 
+- if everything is working fine, then type : pm2 start app.js --name "App name : PORT"
+pm2 start app.js --name "saad app "
+if i make any changes in vs code or my repo , first u have to push then in the cloud u have to pull and then type
+ pm2 start app.js --name "saad app "
+Commands list 
+pm2 restart all 
+pm2 delete id 
+pm2 restart id
+pm2 logs id 
+pm2 logs
